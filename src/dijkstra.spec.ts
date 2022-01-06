@@ -1,5 +1,8 @@
 import { dijkstra } from './dijkstra';
 
+/**
+ * Tupple: [description, arguments]
+ */
 type TestCase = [
   string,
   {
@@ -50,6 +53,11 @@ const testCases: TestCase[] = [
       expectedPath: [2, 0, 3, 1],
     },
   ],
+  // TODO
+  // returns null when path was not found
+  // accepts only square matrices for the cost
+  // source and target should be within bounds
+  // source and target should not be the same
 ];
 
 describe('dijkstra', () => {
@@ -57,8 +65,21 @@ describe('dijkstra', () => {
     'solves correctly: %s',
     (_, { graph, source, target, expectedPath }) => {
       const path = dijkstra(graph, source, target);
-
       expect(path).toEqual(expectedPath);
     },
   );
+
+  it('returns null when no path is found', () => {
+    const graph = [
+      [Infinity, Infinity, 1, 1],
+      [4, Infinity, 6, 1],
+      [1, Infinity, Infinity, Infinity],
+      [1, Infinity, Infinity, Infinity],
+    ];
+    const source = 2;
+    const target = 1;
+    const path = dijkstra(graph, source, target);
+
+    expect(path).toBeNull();
+  });
 });
