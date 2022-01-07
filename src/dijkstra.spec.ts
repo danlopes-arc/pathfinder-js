@@ -75,34 +75,40 @@ describe('dijkstra', () => {
   });
 
   it.each([
-    {
-      graph: [
-        [Infinity, 2, 1],
-        [2, Infinity, 4],
-      ],
-    },
-    {
-      graph: [
-        [Infinity, 2],
-        [2, Infinity],
-        [1, 4],
-      ],
-    },
-    {
-      graph: [
-        [Infinity, 2, 1],
-        [2, Infinity],
-        [1, 4, Infinity],
-      ],
-    },
-  ])('throws when non square matrix is given for the graph # %#', ({ graph }) => {
+    [
+      {
+        graph: [
+          [Infinity, 2, 1],
+          [2, Infinity, 4],
+        ],
+      },
+    ],
+    [
+      {
+        graph: [
+          [Infinity, 2],
+          [2, Infinity],
+          [1, 4],
+        ],
+      },
+    ],
+    [
+      {
+        graph: [
+          [Infinity, 2, 1],
+          [2, Infinity],
+          [1, 4, Infinity],
+        ],
+      },
+    ],
+  ])('throws when non square matrix is given for the graph #%#', ({ graph }) => {
     const source = 0;
     const target = 1;
 
     expect(() => dijkstra(graph, source, target)).toThrowError('Graph should be a square matrix');
   });
 
-  it.each([-1, 3])('throws when source is out of bounds # %#', (source) => {
+  it.each([-1, 3])('throws when source is out of bounds #%#', (source) => {
     const graph = [
       [Infinity, 2, 1],
       [2, Infinity, 4],
@@ -113,7 +119,7 @@ describe('dijkstra', () => {
     expect(() => dijkstra(graph, source, target)).toThrowError('Source is out of bounds');
   });
 
-  it.each([-1, 3])('throws when target is out of bounds # %#', (target) => {
+  it.each([-1, 3])('throws when target is out of bounds #%#', (target) => {
     const graph = [
       [Infinity, 2, 1],
       [2, Infinity, 4],
@@ -123,7 +129,7 @@ describe('dijkstra', () => {
 
     expect(() => dijkstra(graph, source, target)).toThrowError('Target is out of bounds');
   });
-  it.each([0, 1, 2])('throws when source and target are the same %#', (source) => {
+  it.each([0, 1, 2])('throws when source and target are the same #%#', (source) => {
     const graph = [
       [Infinity, 2, 1],
       [2, Infinity, 4],
@@ -135,5 +141,18 @@ describe('dijkstra', () => {
       'Source and target must be different',
     );
   });
-  // describe: works unidirectionally
+
+  it('works unidirectionally', () => {
+    const graph = [
+      [Infinity, Infinity, 1, Infinity],
+      [5, Infinity, Infinity, 1],
+      [Infinity, 1, Infinity, Infinity],
+      [1, Infinity, Infinity, Infinity],
+    ];
+    const source = 1;
+    const target = 2;
+    const path = dijkstra(graph, source, target);
+
+    expect(path).toEqual([1, 3, 0, 2]);
+  });
 });
