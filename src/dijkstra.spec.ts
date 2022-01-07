@@ -123,6 +123,17 @@ describe('dijkstra', () => {
 
     expect(() => dijkstra(graph, source, target)).toThrowError('Target is out of bounds');
   });
-  it.todo('throws when source and target are the same');
+  it.each([0, 1, 2])('throws when source and target are the same %#', (source) => {
+    const graph = [
+      [Infinity, 2, 1],
+      [2, Infinity, 4],
+      [1, 4, Infinity],
+    ];
+    const target = source;
+
+    expect(() => dijkstra(graph, source, target)).toThrowError(
+      'Source and target must be different',
+    );
+  });
   // describe: works unidirectionally
 });

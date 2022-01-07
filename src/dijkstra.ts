@@ -15,6 +15,10 @@ export const dijkstra = (graph: number[][], source: number, target: number): num
     throw new Error('Target is out of bounds');
   }
 
+  if (source === target) {
+    throw new Error('Source and target must be different');
+  }
+
   const costs = [...Array(vertexCount)].map(() => Infinity);
   costs[source] = 0;
 
