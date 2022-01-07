@@ -1,6 +1,20 @@
 export const dijkstra = (graph: number[][], source: number, target: number): number[] | null => {
   const vertexCount = graph.length;
 
+  const isSquareMatrix = graph.every((row) => row.length === vertexCount);
+
+  if (!isSquareMatrix) {
+    throw new Error('Graph should be a square matrix');
+  }
+
+  if (source < 0 || source >= vertexCount) {
+    throw new Error('Source is out of bounds');
+  }
+
+  if (target < 0 || target >= vertexCount) {
+    throw new Error('Target is out of bounds');
+  }
+
   const costs = [...Array(vertexCount)].map(() => Infinity);
   costs[source] = 0;
 
@@ -49,5 +63,8 @@ export const dijkstra = (graph: number[][], source: number, target: number): num
 };
 
 function isSmallestCost(vertex: number, vertices: number[], costs: number[]): boolean {
+  if (costs[vertex] === Infinity) {
+    return false;
+  }
   return [...vertices].map((v) => costs[v]).sort()[0] >= costs[vertex];
 }
