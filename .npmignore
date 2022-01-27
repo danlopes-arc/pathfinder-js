@@ -1,0 +1,4 @@
+*
+!lib/**/*
+*.spec.js*
+*.spec.d.ts

@@ -1,10 +1,13 @@
 {
-  "name": "pathfinder-js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@danlopes-arc/pathfinder-js",
+  "version": "0.1.0",
+  "description": "Pathfinding algorithms for JavaScript.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "prepublishOnly": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
